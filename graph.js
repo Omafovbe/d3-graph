@@ -208,6 +208,7 @@ defs.selectAll("indicatorClip").data([0, 1])
 svg = svg.append("g")
     .attr("transform", "translate(" + dim.margin.left + "," + dim.margin.top + ")");
 
+    //X-Axis Top Title
 svg.append('text')
     .attr("class", "symbol")
     .attr("x", 20)
@@ -221,10 +222,11 @@ var ohlcSelection = svg.append("g")
     .attr("class", "ohlc")
     .attr("transform", "translate(0,0)");
 
+    
 ohlcSelection.append("g")
     .attr("class", "axis")
     .attr("transform", "translate(" + x(1) + ",0)")
-.append("text")
+    .append("text") //Controls the y-axis title
     .attr("transform", "rotate(-90)")
     .attr("y", -15)
     .attr("dy", ".71em")
