@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+
+<html>
+   <head>
+      
+      
+		
+   </head>
+   
+   <body>
+      <div id = "sse">
+         <a href = "javascript:WebSocketTest()">Run WebSocket</a>
+         <button id="disconnect">Close WebSocket</button>
+         <p id="result"></p>
+      </div>
+      <script type = "text/javascript">
+        const dataR = [];
+              function log(msg) {
+                    //document.getElementById('result').innerText += msg + '\n';
+                    console.log(dataR.length);
+                    dataR.push(JSON.parse(msg));
+                 }
+        
+                 
+                 ///function WebSocketTest() {
+                    disconnectBut = document.getElementById('disconnect');
+                    disconnectBut.onclick = closeWS;
+        
+                    if ("WebSocket" in window) {
+                       alert("WebSocket is supported by your Browser!");
+                       // Let us open a web socket
+                       var ws = new WebSocket("wss://feed.cryptoquote.io/v1/firehose/47153bd0-68ea-11e8-aefc-6313a2cf84fa");
+                        
+                       ws.onopen = function() {
+                          // Web Socket is connected, send data using send()
+                          ws.send("Message to send");
+                          alert("Message is sent...");
+                       };
+                        
+                       ws.onmessage = function (evt) { 
+                          var received_msg = evt.data;
+                          //alert("Message is received...");
+                         log(received_msg);
+                       };
+                        
+                       ws.onclose = function() { 
+                          // websocket is closed.
+                          alert("Connection is closed..."); 
+                       };
+                    } else {
+                      
+                       // The browser doesn't support WebSocket
+                       alert("WebSocket NOT supported by your Browser!");
+                    }
+        
+                    function closeWS() {
+                     ws.close();
+                     console.log(dataR)
+                     const btcsym = dataR.filter( bitcon => {
+                         return bitcon.symbol == "BTCUSD";
+                        });
+                     console.log(btcsym)
+                 }
+                //  }
+                //  window.addEventListener('load', WebSocketTest, false);
+              </script>
+   </body>
+</html>
